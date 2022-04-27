@@ -130,3 +130,97 @@ def my_basemaps():
 
     return mapper
     
+    
+## specify some point data (e.g. global seismicity in this case)
+
+def download_point_data(region):
+    
+    from obspy.core import event
+    from obspy.clients.fdsn import Client
+    from obspy import UTCDateTime
+
+    client = Client("IRIS")
+
+    extent = region
+
+    starttime = UTCDateTime("1975-01-01")
+    endtime   = UTCDateTime("2022-01-01")
+    cat = client.get_events(starttime=starttime, endtime=endtime,
+                        minlongitude=extent[0],
+                        maxlongitude=extent[1],
+                        minlatitude=extent[2],
+                        maxlatitude=extent[3],
+                        minmagnitude=4.1, catalog="ISC")
+
+    print ("Point data: {} events in catalogue".format(cat.count()))
+    
+    
+    # Unpack the obspy data into a plottable array
+
+    event_count = cat.count()
+
+    eq_origins = np.zeros((event_count, 4))
+
+    for ev, event in enumerate(cat.events):
+        eq_origins[ev,0] = dict(event.origins[0])['longitude']
+        eq_origins[ev,1] = dict(event.origins[0])['latitude']
+        eq_origins[ev,2] = dict(event.origins[0])['depth'] 
+        eq_origins[ev,3] = dict(event.magnitudes[0])['mag'] 
+        
+    # scale 
+    eq_origins[ev,3] = 50.0*(eq_origins[ev,3] - 4.0)
+
+
+    return eq_origins
+
+
+def my_point_data(region):
+    
+    data = download_point_data(region)
+    
+    return data
+
+
+## - Some global raster data (lon, lat, data) global plate age, in this example
+
+
+def download_raster_data():
+    
+    # Seafloor age data and global image - data from Earthbyters
+
+    # The data come as ascii lon / lat / age tuples with NaN for no data. 
+    # This can be loaded with ...
+
+    # age = numpy.loadtxt("Resources/global_age_data.3.6.xyz")
+    # age_data = age.reshape(1801,3601,3)  # I looked at the data and figured out what numbers to use
+    # age_img  = age_data[:,:,2]
+
+    # But this is super slow, so I have just stored the Age data on the grid (1801 x 3601) which we can reconstruct easily
+
+    from cloudstor import cloudstor
+    teaching_data = cloudstor(url="L93TxcmtLQzcfbk", password='')
+    teaching_data.download_file_if_distinct("global_age_data.3.6.z.npz", "global_age_data.3.6.z.npz")
+    
+    datasize = (1801, 3601, 3)
+    age_data = np.empty(datasize)
+
+    ages = np.load("global_age_data.3.6.z.npz")["ageData"]
+
+    lats = np.linspace(90, -90, datasize[0])
+    lons = np.linspace(-180.0,180.0, datasize[1])
+
+    arrlons,arrlats = np.meshgrid(lons, lats)
+    
+    age_data[...,0] = arrlons[...]
+    age_data[...,1] = arrlats[...]
+    age_data[...,2] = ages[...]
+     
+    return age_data
+
+
+def my_global_raster_data():
+    
+    
+    raster = download_raster_data()
+    
+    return raster

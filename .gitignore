@@ -1,6 +1,14 @@
 # Mac OS X
 .DS_Store
 
+
+# Local files
+
+global_age_data.3.6.z.npz
+LA_Basin_Map.png
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
