@@ -25,30 +25,29 @@ a project that you write for yourself over any length of time.
 
 ## The group task
 
-In groups of three or four, you will be given access to a group repository and you will
-each have to write your individual solution to the notebook problem in a 
-subdirectory. 
+In groups of three or four, you will be given access to a group repository. Each group member
+will have to write their individual solution to the notebook problem in a subdirectory `UserX`. 
 
-We expect you to manage this task through github pull requests and we want you to each 
-make one or more pull requests, review somebody else's pull request, raise issues and 
+We expect you to manage this task through GitHub pull requests. We would like to see each of
+you make one or more pull requests, review somebody else's pull request, raise issue(s) and 
 check that they can be closed, etc.
 
-You also need to create a README.md file that you develop collaboratively and which will
-allow us to click through to find your individual notebooks. The README.md file is the one
-that github highlights when you view a repository and it should be aimed at us as new users
-of your maps so we can see what you did without having to ask you.
+You also need to collaboratively create a `README.md` file for the group repository that will
+describe the repository's contents and anybody to click through to find your individual notebooks.
+The `README.md` file is the one that GitHub highlights when you view a repository and it should be
+aimed at us as new users of your maps so we can see what you did without having to ask you.
 
-We would like you to document how you all collaborated with a short markdown report 
-that, again, is developed by each of you editing and contributing. Please use this
-report as an opportunity to highlight the aspects of the marking rubric that we
+We would further like you to document how you all collaborated with a short markdown report 
+that, again, is developed collaboratively. Each of you should contribute to it via pull requests, etc.
+Please use this report as an opportunity to highlight the aspects of the marking rubric that we
 are going to be evaluating for the group.
 
 ## The nuts and bolts
 
 We will lead you through the process of copying the repository (a fork), show you how
-to clone the repository to our group server, and how to edit the code. We will
-be around to support any of these aspects of the assessment because it is complicated
-the first time.
+to clone the repository to our group server, and how to edit the code. We understand
+that working around git cloning/forkign/pushing/pulling might be daunting the first
+time so we will be around to support any of these (technical) aspects of the assessment.
 
 ## Marking Rubric
 
@@ -60,7 +59,7 @@ understand what this exercise is about.
 
 We split the assessment into a series of tasks and mark each one
 as great (A/100), good (B/80), ok (C/60), horrible or not attempted (F/0). 
-Some tasks will be Y (100) / N (0) 
+Some tasks will be yes/no: Y (100) / N (0) 
 
 
 | Task | Assessed | Mark percentage %|
