@@ -44,12 +44,9 @@ $$
 Python hic est aliquis codicem quem animum advertere volumus
 
 ```python
-
 # The classic "hello world" program
 print("salve mundi !")
-
 ```
-
 """
     
     return markdown_documentation
@@ -58,33 +55,27 @@ print("salve mundi !")
 
 def my_coastlines(resolution):
     """ returns the relevant coastlines at the requested resolution """
-    
-    import cartopy.feature as cfeature
-    
 
-    return cfeature.NaturalEarthFeature('physical', 'coastline', resolution,
-                           edgecolor=(0.0,0.0,0.0),
-                           facecolor="none")
+    import cartopy.feature as cfeature
+
+    return cfeature.NaturalEarthFeature('physcical', 'coastline', res,
+                                        edgecolor=(0.0,0.0,0.0),
+                                        facecolor="none")
 
 
 def my_water_features(resolution, lakes=True, rivers=True, ocean=False):
-    """Returns a [list] of cartopy features - the ones you ask for"""
+    """Returns a [list] of cartopy features"""
     
     features = []
     
     if rivers:
-        features.append(cfeature.NaturalEarthFeature('physical', 'rivers_lake_centerlines', resolution,
-                                        edgecolor='Blue', facecolor="none"))
+        features.append(something)
         
     if lakes:
-        features.append(cfeature.NaturalEarthFeature('physical', 'lakes', resolution,
-                                        edgecolor="blue", facecolor="blue"))
+        features.append(somethingelse)
 
     if ocean:
-        features.append(cfeature.NaturalEarthFeature('physical', 'ocean', resolutio,
-                           edgecolor="green",
-                           facecolor="blue"))
-    
+        features.append(somethingelse)
     
     return features
 
@@ -98,47 +89,12 @@ def my_basemaps():
     
     mapper = {}
     
-    ## Continental US terrain images
-    mapper["stamen_terrain"] = cimgt.Stamen('terrain-background')
-    mapper["stamen_terrain_plus"] = cimgt.Stamen('terrain')
-    mapper["stamen_artist"] = cimgt.Stamen('watercolor')
-
-    ## Mapquest satellite / streetmap images 
-    mapper["map_quest_aerial"] = cimgt.MapQuestOpenAerial()
-    mapper["map_quest_street"] = cimgt.MapQuestOSM()
-
     ## Open Street map
     mapper["open_street_map"] = cimgt.OSM()
 
-    ## Satellite Quadtree
-    mapper["qtree_satellite_plus"]  = cimgt.QuadtreeTiles()
-
-
-    ## Ordinance Survey (not set up)
-    # ord_survey = cimgt.OrdnanceSurvey(apikey="")
-
-    ## Azure (Not released in cartopy)
-    # azure = None
-
-    ## Mapbox Satellite images 
-    
-    mapper["mapbox_streets"] = cimgt.MapboxTiles(map_id='streets-v11', 
-                                     access_token='pk.eyJ1IjoibG91aXNtb3Jlc2kiLCJhIjoiY2pzeG1mZzFqMG5sZDQ0czF5YzY1NmZ4cSJ9.lpsUzmLasydBlS0IOqe5JA')
-
-    mapper["mapbox_outdoors"] = cimgt.MapboxTiles(map_id='outdoors-v11', 
-                                         access_token='pk.eyJ1IjoibG91aXNtb3Jlc2kiLCJhIjoiY2pzeG1mZzFqMG5sZDQ0czF5YzY1NmZ4cSJ9.lpsUzmLasydBlS0IOqe5JA')
-
-    mapper["mapbox_satellite"] = cimgt.MapboxTiles(map_id='satellite-v9', 
-                                         access_token='pk.eyJ1IjoibG91aXNtb3Jlc2kiLCJhIjoiY2pzeG1mZzFqMG5sZDQ0czF5YzY1NmZ4cSJ9.lpsUzmLasydBlS0IOqe5JA')
-
-    ## Google maps image tiles ()
-    mapper["google_maps_street"] = cimgt.GoogleTiles(style="street") 
-    mapper["google_maps_satellite"] = cimgt.GoogleTiles(style="satellite") 
-    mapper["google_maps_terrain"] = cimgt.GoogleTiles(style="terrain") 
-
     return mapper
-    
-    
+
+
 ## specify some point data (e.g. global seismicity in this case)
 
 def download_point_data(region):
@@ -153,15 +109,10 @@ def download_point_data(region):
 
     starttime = UTCDateTime("1975-01-01")
     endtime   = UTCDateTime("2022-01-01")
-    cat = client.get_events(starttime=starttime, endtime=endtime,
-                        minlongitude=extent[0],
-                        maxlongitude=extent[1],
-                        minlatitude=extent[2],
-                        maxlatitude=extent[3],
-                        minmagnitude=4.1, catalog="ISC")
+    
+    cat = client.get_events...
 
     print ("Point data: {} events in catalogue".format(cat.count()))
-    
     
     # Unpack the obspy data into a plottable array
 
@@ -169,15 +120,7 @@ def download_point_data(region):
 
     eq_origins = np.zeros((event_count, 4))
 
-    for ev, event in enumerate(cat.events):
-        eq_origins[ev,0] = dict(event.origins[0])['longitude']
-        eq_origins[ev,1] = dict(event.origins[0])['latitude']
-        eq_origins[ev,2] = dict(event.origins[0])['depth'] 
-        eq_origins[ev,3] = dict(event.magnitudes[0])['mag'] 
-        
-    # scale 
-    eq_origins[ev,3] = 50.0*(eq_origins[ev,3] - 4.0)
-
+    some_code
 
     return eq_origins
 
@@ -190,7 +133,6 @@ def my_point_data(region):
 
 
 ## - Some global raster data (lon, lat, data) global plate age, in this example
-
 
 def download_raster_data():
     
@@ -208,27 +150,15 @@ def download_raster_data():
     from cloudstor import cloudstor
     teaching_data = cloudstor(url="L93TxcmtLQzcfbk", password='')
     teaching_data.download_file_if_distinct("global_age_data.3.6.z.npz", "global_age_data.3.6.z.npz")
-    
+
     datasize = (1801, 3601, 3)
-    age_data = np.empty(datasize)
+    raster_data = np.empty(datasize)
 
-    ages = np.load("global_age_data.3.6.z.npz")["ageData"]
-
-    lats = np.linspace(90, -90, datasize[0])
-    lons = np.linspace(-180.0,180.0, datasize[1])
-
-    arrlons,arrlats = np.meshgrid(lons, lats)
-    
-    age_data[...,0] = arrlons[...]
-    age_data[...,1] = arrlats[...]
-    age_data[...,2] = ages[...]
-     
-    return age_data
+    return raster_data
 
 
 def my_global_raster_data():
-    
-    
+
     raster = download_raster_data()
     
     return raster
